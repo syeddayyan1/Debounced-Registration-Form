@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import useCountries from "../api/client/getCountries";
 import { useForm } from "react-hook-form";
+import postForm from "../api/client/postForm";
+import usePostForm from "../api/client/postForm";
 
 function DebounceForm() {
 
@@ -29,8 +31,15 @@ function DebounceForm() {
   const selectedCountry = watch("country");
 
   // Countries API
-  const {
-    data: countries = [],isLoading,isError, error} = useCountries();
+  const { data: countries = [], isLoading, isError, error } = useCountries();
+  
+ const {mutate,isPending,isSuccess,isError: isSubmitError,error: submitError} = usePostForm();
+  
+  //  Mutation submit message
+{isPending && <p>Submitting...</p>}
+{isSuccess && <p>Form submitted successfully!</p>}
+{isSubmitError && <p>{submitError?.message}</p>}
+  
 
   // Debounce
   useEffect(() => {
@@ -54,11 +63,18 @@ function DebounceForm() {
     setSubmittedData(null);
   };
 
-  // Submit Form
-  const onSubmit = (data) => {
-    setSubmittedData(data);
-    console.log(data);
+ 
+// Submit Form hogaa tu submit result show or api post 
+const onSubmit = async (data) => {
+  setSubmittedData(data);
+
+  mutate(data);
+  console.log(data)
+
   };
+  
+
+  
 
   // Styling
   const inputStyle =
