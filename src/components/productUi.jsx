@@ -1,11 +1,11 @@
 
 import React from "react";
 import "./productUi.css";
-import useProducts from "../api/client/getProduct";
+import getProducts from "../api/client/getProduct";
 
 
 const ProductUi = () => {
-  const { data, isLoading, isError , error } = useProducts();
+  const { data, isLoading, isError , error } = getProducts();
 
   if (isLoading) return <div className="shop-state">Loading products...</div>;
 

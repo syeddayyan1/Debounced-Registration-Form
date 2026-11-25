@@ -1,19 +1,36 @@
+// import { useQuery } from "@tanstack/react-query";
+//  import api from "../axios/axios";
+
+
+
+// const getPorducts = async () => {
+//     const response = await api.get("/products")
+//     return response.data;
+// };
+
+
+// const useProducts = () => {
+//     return useQuery({
+//         queryKey: ["products"],
+//         queryFn: () => getPorducts(),
+//     });
+// };
+
+// export default useProducts;
+
+import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
- import api from "../axios/axios";
 
-
-
-const getPorducts = async () => {
-    const response = await api.get("/products")
-    return response.data;
-};
-
-
-const useProducts = () => {
-    return useQuery({
+export default function getProducts() {
+    const { data, isPending, isError, error } = useQuery({
         queryKey: ["products"],
-        queryFn: () => getPorducts(),
+        queryFn: () => api.get("/products/"),
     });
-};
 
-export default useProducts;
+    return {
+        data: data ?.data,
+        isError,
+        isPending,
+        error,
+    }
+}
