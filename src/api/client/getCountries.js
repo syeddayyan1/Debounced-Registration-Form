@@ -27,7 +27,7 @@ export default function getCountries() {
   });
 
   return {
-    data: data?.data,
+    data: data?.data?.data,
     isLoading,
     isPending,
     isError,

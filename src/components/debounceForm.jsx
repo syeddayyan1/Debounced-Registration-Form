@@ -30,7 +30,8 @@ function DebounceForm() {
   const selectedCountry = watch("country");
 
   // Countries API
-const { data: countries = [], isLoading, isError, error } = getCountries();  
+  const { data: countries = [], isLoading, isError, error } = getCountries();  
+
   
   
 const {mutate, data:responseData, isPending:isSubmitting , isSuccess , isError:isSubmitError, error:submitError}=PostForm();  
@@ -48,7 +49,7 @@ const {mutate, data:responseData, isPending:isSubmitting , isSuccess , isError:i
 
   // Filter Countries
   const filteredCountries = countries.filter((country) =>
-    country.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+    country.name.toLowerCase().includes(debouncedSearch.toLowerCase()),
   );
 
   // Select Country
@@ -63,11 +64,25 @@ const {mutate, data:responseData, isPending:isSubmitting , isSuccess , isError:i
 // Submit Form hogaa tu submit result show or api post 
 const onSubmit = (data) => {
   setSubmittedData(data);
-
-  mutate(data);
   console.log(data)
 
-  };
+  const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("email", data.email);
+  formData.append("phone", data.phone);
+  formData.append("gender", data.gender);
+  formData.append("country", data.country);
+  formData.append("message", data.message);
+
+  data.skills.forEach((skill) => {
+    formData.append("skills", skill);
+  });
+
+  formData.append("picture", data.picture[0]);
+
+  mutate(formData);
+};
   
 
   
@@ -187,7 +202,6 @@ const onSubmit = (data) => {
 
                 <label className={labelStyle}>Country Search</label>
 
-                {/* Actual Country Field */}
                 <input
                   type="hidden"
                   {...register("country", {
@@ -195,7 +209,6 @@ const onSubmit = (data) => {
                   })}
                 />
 
-                {/* Search Input */}
                 <input
                   type="text"
                   value={search}

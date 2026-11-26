@@ -22,7 +22,7 @@ import api from "../axios/axios";
 
 export default function PostForm() {
   const { mutate, data, isSuccess, isPending, isError, error } = useMutation({
-      mutationFn: (data) => api.post("/echo", data),
+      mutationFn: (formData) => api.post("/form", formData),
       onError: (err) => {
           console.log("post form error: ", err)
       }
