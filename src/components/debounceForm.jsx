@@ -359,6 +359,30 @@ const onSubmit = (data) => {
 
           </section>
 
+      <div className="flex flex-col gap-2">
+      <label className="text-sm font-semibold text-gray-700">
+       Upload Picture
+      </label>
+
+      <input
+       type="file"
+       accept="image/*"
+       {...register("picture", {
+        validate: (files) =>
+      files[0]?.size <= 1 * 1024 *1024 ||
+      "Image size must be less than 1MB",
+  })}
+    className="w-full rounded-lg border border-gray-300 bg-white p-3 text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-black file:px-4 file:py-2 file:text-white file:font-medium hover:file:bg-gray-800 cursor-pointer"
+      />
+
+         <p className="text-xs text-gray-400">
+           Select an image from your device (JPG, PNG).
+          </p>
+         <p className="text-red-500 text-sm">
+         {errors.picture?.message}
+       </p>
+       </div>
+
           <div className="border-t border-slate-100"></div>
 
           {/* Message */}

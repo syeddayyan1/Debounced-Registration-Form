@@ -18,8 +18,8 @@
 
 // export default useProducts;
 
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+
 
 export default function getProducts() {
     const { data, isPending, isError, error } = useQuery({
@@ -34,3 +34,5 @@ export default function getProducts() {
         error,
     }
 }
+
+
